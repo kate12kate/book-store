@@ -19,6 +19,7 @@ namespace EBook.Repository
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public virtual DbSet<BookInShoppingCart> BookInShoppingCarts { get; set; }
+        public virtual DbSet<EmailMessage> EmailMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -55,6 +56,20 @@ namespace EBook.Repository
                 .HasOne<EShopAppUser>(z => z.Owner)
                 .WithOne(z => z.UserCart)
                 .HasForeignKey<ShoppingCart>(z => z.OwnerId);
+
+            builder.Entity<BookInOrder>()
+               .Property(z => z.Id)
+               .ValueGeneratedOnAdd();
+
+            builder.Entity<BookInOrder>()
+                .HasOne(z => z.Book)
+                .WithMany(z => z.BookInOrders)
+                .HasForeignKey(z => z.BookId);
+
+            builder.Entity<BookInOrder>()
+                .HasOne(z => z.Order)
+                .WithMany(z => z.BookInOrders)
+                .HasForeignKey(z => z.OrderId);
 
         }
     

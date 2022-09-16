@@ -10,7 +10,7 @@ namespace EBook.Domain.DTO
     {
         public Book SelectedBook { get; set; }
 
-        public Guid BookId { get; set; }
+        public Guid SelectedBookId { get; set; }
 
         public int Quantity { get; set; }
     }

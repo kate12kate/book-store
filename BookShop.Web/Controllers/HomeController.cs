@@ -1,4 +1,5 @@
-﻿using BookShop.Web.Models;
+﻿
+using EBook.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookShop.Web.Controllers
+namespace EBook.Web.Controllers
 {
     public class HomeController : Controller
     {

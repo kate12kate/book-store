@@ -25,6 +25,7 @@ namespace EBook.Domain.DomainModels
         public int Rating { get; set; }
 
         public virtual ICollection<BookInShoppingCart> BookInShoppingCarts { get; set; }
+        public virtual ICollection<BookInOrder> BookInOrders { get; set; }
 
 
     }

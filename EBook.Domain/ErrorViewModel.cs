@@ -1,6 +1,6 @@
 using System;
 
-namespace EBook.Web.Models
+namespace EBook.Domain
 {
     public class ErrorViewModel
     {

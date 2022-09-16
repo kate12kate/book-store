@@ -1,16 +1,14 @@
-﻿
-
-
-using EBook.Domain;
-using EBook.Domain.DomainModels;
+﻿using EBook.Domain.DomainModels;
 using EBook.Domain.DTO;
-using EBook.Domain.Relations;
+using EBook.Domain;
 using EBook.Repository.Interface;
 using EBook.Service.Interface;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EBook.Domain.Relations;
 
 namespace EBook.Service.Implementation
 {
@@ -18,27 +16,29 @@ namespace EBook.Service.Implementation
     {
         private readonly IRepository<ShoppingCart> _shoppingCartRepository;
         private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<EmailMessage> _mailRepository;
         private readonly IRepository<BookInOrder> _bookInOrderRepository;
         private readonly IUserRepository _userRepository;
 
-        public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IUserRepository userRepository, IRepository<Order> orderRepository, IRepository<BookInOrder> bookInOrderRepository)
+        public ShoppingCartService(IRepository<ShoppingCart> shoppingCartRepository, IUserRepository userRepository, IRepository<EmailMessage> mailRepository, IRepository<Order> orderRepository, IRepository<BookInOrder> bookInOrderRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _userRepository = userRepository;
             _orderRepository = orderRepository;
             _bookInOrderRepository = bookInOrderRepository;
+            _mailRepository = mailRepository;
         }
 
 
-        public bool deleteBookFromSoppingCart(string userId, Guid bookId)
+        public bool deleteBookFromSoppingCart(string userId, Guid productId)
         {
-            if (!string.IsNullOrEmpty(userId) && bookId != null)
+            if (!string.IsNullOrEmpty(userId) && productId != null)
             {
                 var loggedInUser = this._userRepository.Get(userId);
 
                 var userShoppingCart = loggedInUser.UserCart;
 
-                var itemToDelete = userShoppingCart.BookInShoppingCarts.Where(z => z.BookId.Equals(bookId)).FirstOrDefault();
+                var itemToDelete = userShoppingCart.BookInShoppingCarts.Where(z => z.BookId.Equals(productId)).FirstOrDefault();
 
                 userShoppingCart.BookInShoppingCarts.Remove(itemToDelete);
 
@@ -57,24 +57,24 @@ namespace EBook.Service.Implementation
 
                 var userCard = loggedInUser.UserCart;
 
-                var allBooks = userCard.BookInShoppingCarts.ToList();
+                var allProducts = userCard.BookInShoppingCarts.ToList();
 
-                var allBookPrices = allBooks.Select(z => new
+                var allProductPrices = allProducts.Select(z => new
                 {
-                    BookPrice = z.CurrnetBook.Price,
+                    ProductPrice = z.CurrnetBook.Price,
                     Quantity = z.Quantity
                 }).ToList();
 
                 double totalPrice = 0.0;
 
-                foreach (var item in allBookPrices)
+                foreach (var item in allProductPrices)
                 {
-                    totalPrice += item.Quantity * item.BookPrice;
+                    totalPrice += item.Quantity * item.ProductPrice;
                 }
 
                 var reuslt = new ShoppingCartDto
                 {
-                    Books =allBooks,
+                    Books = allProducts,
                     TotalPrice = totalPrice
                 };
 
@@ -90,6 +90,12 @@ namespace EBook.Service.Implementation
                 var loggedInUser = this._userRepository.Get(userId);
                 var userCard = loggedInUser.UserCart;
 
+                EmailMessage mail = new EmailMessage();
+                mail.MailTo = loggedInUser.Email;
+                mail.Subject = "Sucessfuly created order!";
+                mail.Status = false;
+
+
                 Order order = new Order
                 {
                     Id = Guid.NewGuid(),
@@ -99,7 +105,7 @@ namespace EBook.Service.Implementation
 
                 this._orderRepository.Insert(order);
 
-                List<BookInOrder> bookInOrders = new List<BookInOrder>();
+                List<BookInOrder> productInOrders = new List<BookInOrder>();
 
                 var result = userCard.BookInShoppingCarts.Select(z => new BookInOrder
                 {
@@ -107,12 +113,31 @@ namespace EBook.Service.Implementation
                     BookId = z.CurrnetBook.Id,
                     Book = z.CurrnetBook,
                     OrderId = order.Id,
-                    Order = order
+                    Order = order,
+                    Quantity = z.Quantity
                 }).ToList();
 
-                bookInOrders.AddRange(result);
+                StringBuilder sb = new StringBuilder();
 
-                foreach (var item in bookInOrders)
+                var totalPrice = 0.0;
+
+                sb.AppendLine("Your order is completed. The order conatins: ");
+
+                for (int i = 1; i <= result.Count(); i++)
+                {
+                    var currentItem = result[i - 1];
+                    totalPrice += currentItem.Quantity * currentItem.Book.Price;
+                    sb.AppendLine(i.ToString() + ". " + currentItem.Book.BookName + " with quantity of: " + currentItem.Quantity + " and price of: $" + currentItem.Book.Price);
+                }
+
+                sb.AppendLine("Total price for your order: " + totalPrice.ToString());
+
+                mail.Content = sb.ToString();
+
+
+                productInOrders.AddRange(result);
+
+                foreach (var item in productInOrders)
                 {
                     this._bookInOrderRepository.Insert(item);
                 }
@@ -120,6 +145,7 @@ namespace EBook.Service.Implementation
                 loggedInUser.UserCart.BookInShoppingCarts.Clear();
 
                 this._userRepository.Update(loggedInUser);
+                this._mailRepository.Insert(mail);
 
                 return true;
             }

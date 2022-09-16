@@ -35,9 +35,9 @@ namespace EBook.Service.Implementation
 
             var userShoppingCard = user.UserCart;
 
-            if (item.BookId != null && userShoppingCard != null)
+            if (item.SelectedBookId != null && userShoppingCard != null)
             {
-                var book = this.GetDetailsForBook(item.BookId);
+                var book = this.GetDetailsForBook(item.SelectedBookId);
 
                 if (book != null)
                 {
@@ -86,7 +86,7 @@ namespace EBook.Service.Implementation
             AddToShoppingCartDto model = new AddToShoppingCartDto
             {
                 SelectedBook = book,
-                BookId = book.Id,
+                SelectedBookId = book.Id,
                 Quantity = 1
             };
 

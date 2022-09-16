@@ -1,4 +1,5 @@
-﻿using EBook.Domain.DomainModels;
+﻿using EBook.Domain;
+using EBook.Domain.DomainModels;
 using EBook.Repository.Interface;
 using EBook.Service.Interface;
 using System;
@@ -20,6 +21,10 @@ namespace EBook.Service.Implementation
         public List<Order> getAllOrders()
         {
             return this._orderRepository.getAllOrders();
+        }
+        public Order getOrderDetails(BaseEntity model)
+        {
+            return this._orderRepository.getOrderDetails(model);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EBook.Domain.DomainModels;
+﻿using EBook.Domain;
+using EBook.Domain.DomainModels;
 using EBook.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace EBook.Repository.Implementation
 {
-    public class OrderRepository :IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly ApplicationDbContext context;
         private DbSet<Order> entities;
@@ -18,14 +19,22 @@ namespace EBook.Repository.Implementation
             this.context = context;
             entities = context.Set<Order>();
         }
-
         public List<Order> getAllOrders()
         {
-            return entities.
-                Include(z=>z.Book).
-                Include("Book.")
-              
-                ToListAsync().Result;
+            return entities
+                .Include(z => z.User)
+                .Include(z => z.BookInOrders)
+                .Include("BookInOrders.Book")
+                .ToListAsync().Result;
+        }
+
+        public Order getOrderDetails(BaseEntity model)
+        {
+            return entities
+               .Include(z => z.User)
+               .Include(z => z.BookInOrders)
+               .Include("BookInOrders.Book")
+               .SingleOrDefaultAsync(z => z.Id == model.Id).Result;
         }
     }
 }

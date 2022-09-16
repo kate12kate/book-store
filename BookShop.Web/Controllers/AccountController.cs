@@ -1,6 +1,6 @@
-﻿using BookShop.Web.Models.Domain;
-using BookShop.Web.Models.DTO;
-using BookShop.Web.Models.Identity;
+﻿using EBook.Domain;
+using EBook.Domain.DTO;
+using EBook.Domain.Identity;
 
 
 using Microsoft.AspNetCore.Authorization;
