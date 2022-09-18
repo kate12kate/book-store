@@ -182,7 +182,7 @@ namespace BookShop.Web.Controllers
 
             if (result)
             {
-                return RedirectToAction("Index", "Bookss");
+                return RedirectToAction("Index", "Books");
             }
             return View(model);
         }

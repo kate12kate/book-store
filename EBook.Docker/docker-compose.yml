@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql/mysql-server
+    environment:
+      MYSQL_DATABASE: "bookdb"
+      MYSQL_ROOT_PASSWORD: "changeme"
+      MYSQL_USER: "katerina"
+      MYSQL_PASSWORD: "changeme"
+    volumes:
+      - bookdb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  bookdb_data:

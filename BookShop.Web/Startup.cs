@@ -42,8 +42,9 @@ namespace EBook.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<EShopAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<EShopAppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+         
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
@@ -60,7 +61,11 @@ namespace EBook.Web
             services.AddTransient<IBookService, Service.Implementation.BookService>();
             services.AddTransient<IShoppingCartService, Service.Implementation.ShoppingCartService>();
             services.AddTransient<IOrderService, Service.Implementation.OrderService>();
+            services.AddTransient<IUserService, Service.Implementation.UserService>();
 
+           
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddControllersWithViews()
                .AddNewtonsoftJson(options =>
                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
