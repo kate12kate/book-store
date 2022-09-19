@@ -23,7 +23,7 @@ namespace EBook.Domain.DomainModels
         [Required]
         public int Price { get; set; }
         public int Rating { get; set; }
-
+        public string Genre { get; set; }
         public virtual ICollection<BookInShoppingCart> BookInShoppingCarts { get; set; }
         public virtual ICollection<BookInOrder> BookInOrders { get; set; }
 

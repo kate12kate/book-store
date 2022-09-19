@@ -2,6 +2,7 @@
 using EBook.Domain.DomainModels;
 using EBook.Domain.Identity;
 using EBook.Domain.Relations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -70,8 +71,55 @@ namespace EBook.Repository
                 .HasOne(z => z.Order)
                 .WithMany(z => z.BookInOrders)
                 .HasForeignKey(z => z.OrderId);
+            // add roles
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = "1",
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            });
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = "2",
+                Name = "Standard_User",
+                NormalizedName = "STANDARD_USER"
+            });
 
+            // sett admin user
+            var appUser = new EShopAppUser
+            {
+                Email = "admin@test.com",
+                NormalizedEmail = "ADMIN@TEST.COM",
+                EmailConfirmed = true,
+                UserName = "admin@test.com",
+                NormalizedUserName = "ADMIN@TEST.COM",
+                PhoneNumberConfirmed = true
+            };
+            //set user password
+            PasswordHasher<EShopAppUser> ph = new PasswordHasher<EShopAppUser>();
+            appUser.PasswordHash = ph.HashPassword(appUser, "Pass123!");
+
+            //seed user
+            builder.Entity<EShopAppUser>().HasData(appUser);
+
+            // shopping cart for admin user
+            var shoppingCart = new ShoppingCart()
+            {
+                Id = Guid.NewGuid(),
+                OwnerId = appUser.Id
+            };
+            builder.Entity<ShoppingCart>().HasData(shoppingCart);
+
+            //set user role to admin
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "1",
+                UserId = appUser.Id
+            });
         }
     
+    }
+
+
 }
-}
+
