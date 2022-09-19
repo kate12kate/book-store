@@ -9,6 +9,7 @@ namespace EBook.Repository.Interface
     public interface IOrderRepository
     {
         List<Order> getAllOrders();
+        List<Order> getAllOrdersForUser(string userId);
         public Order getOrderDetails(BaseEntity model);
     }
 }

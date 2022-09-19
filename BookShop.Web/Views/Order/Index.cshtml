@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<EBook.Domain.DomainModels.Order>
+
+<div class="container">
+
+    <div class="row">
+        <a class="btn btn-primary" asp-controller="Order" asp-action="ExportAllOrders">Export Orders</a>
+    </div>
+
+    <table class="table mt-5">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Costumer Details</th>
+                <th scope="col">Number of products</th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="color:white;">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@item.User.Email</td>
+                    <td>@item.BookInOrders.Count()</td>
+                    <td>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-secondary" asp-action="CreateInvoice" asp-route-id="@item.Id">Create Invoice</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+</div>

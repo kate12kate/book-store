@@ -4,6 +4,7 @@ using EBook.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EBook.Repository.Implementation
@@ -25,6 +26,15 @@ namespace EBook.Repository.Implementation
                 .Include(z => z.User)
                 .Include(z => z.BookInOrders)
                 .Include("BookInOrders.Book")
+                .ToListAsync().Result;
+        }
+        public List<Order> getAllOrdersForUser(string userId)
+        {
+            return entities
+                .Include(z => z.User)
+                .Include(z => z.BookInOrders)
+                .Include("BookInOrders.Book")
+                .Where(p => p.UserId == userId)
                 .ToListAsync().Result;
         }
 

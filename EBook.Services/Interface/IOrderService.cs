@@ -8,7 +8,7 @@ namespace EBook.Service.Interface
 {
     public interface IOrderService
     {
-        List<Order> getAllOrders();
+        List<Order> getAllOrders(string userId);
         public Order getOrderDetails(BaseEntity model);
     }
 }
