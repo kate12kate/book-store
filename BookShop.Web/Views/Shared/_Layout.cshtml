@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cinematix</title>
+    <title>Books</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -15,9 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Antic+Slab&display=swap"
           rel="stylesheet" />
 </head>
-<body style="background-color: black; color: white">
+<body style="background-color: #deab4e; color: white">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar border-bottom box-shadow mb-3" style="background-color:black; color:white;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar border-bottom box-shadow mb-3" style="background-color:#ac7a1f; color:white;">
             <div class="container">
                 
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color: #E50914">
@@ -38,7 +38,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="ShoppingCard" asp-action="Index">Shopping Cart</a>
                             </li>
-                          
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Order" asp-action="Index">All Orders</a>
+                            </li>
                         }
                         @if (User.IsInRole("Admin"))
                         {

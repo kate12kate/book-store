@@ -71,7 +71,7 @@ namespace EBook.Web.Controllers
             var charge = chargeService.Create(new ChargeCreateOptions
             {
                 Amount = (Convert.ToInt32(order.TotalPrice) * 100),
-                Description = "EShop Application Payment",
+                Description = "EBook Application Payment",
                 Currency = "usd",
                 Customer = customer.Id
             });

@@ -1,19 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model EBook.Domain.DomainModels.Order
-
-
-
+﻿@model EBook.Domain.DomainModels.Order
 
 <div class="container">
-    <div class="row">
-        <a class="btn btn-success" >Order for: @Model.User.UserName</a>
-    </div>
+    <p>
+       For: @Model.User.UserName
+    </p>
 
-    @for (int i = 0; i < Model.BookInOrders.Count; i++)
+    <a asp-action="Index">Back to List</a>
+
+    @for (int i = 0; i < Model.BookInOrders.Count(); i++)
     {
         var item = Model.BookInOrders.ElementAt(i).Book;
 
@@ -24,23 +18,22 @@
 
             <div class="col-md-3 m-4">
                 <div class="card" style="width: 18rem; height: 30rem;">
-                    <img class="card-img-top" src="@item.BookImage" style="height: 50%;" alt="Image for product!">
-
+                    <img class="card-img-top" style="height: 70%" src="@item.BookImage" alt="Card image cap">
                     <div class="card-body">
-                        <h3 class="card-title">@item.BookName</h3>
-                        <p class="card-text">@item.BookDescription</p>
-
-
-                        <h6>Price: $@item.Price</h6>
+                        <h3>@item.BookName</h3>
+                        <h3>@item.BookDescription</h3>
+                        <p>Quantity: @Model.BookInOrders.ElementAt(i).Quantity</p>
+                        <p></p>
                     </div>
 
                 </div>
             </div>
-
 
             if (i % 3 == 2)
             {
             @:</div>
         }
     }
+
+
 </div>

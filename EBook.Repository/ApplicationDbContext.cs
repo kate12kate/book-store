@@ -68,7 +68,7 @@ namespace EBook.Repository
                 .HasForeignKey(z => z.BookId);
 
             builder.Entity<BookInOrder>()
-                .HasOne(z => z.Order)
+                .HasOne(z => z.UserOrder)
                 .WithMany(z => z.BookInOrders)
                 .HasForeignKey(z => z.OrderId);
             // add roles

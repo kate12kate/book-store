@@ -4,46 +4,57 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h1 style="margin-left: 20px">Book's Details</h1>
 
-<h1>Details</h1>
-
-<div>
-    <h4>Book</h4>
+<div class="container">
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookImage)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookImage)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BookDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BookDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-    </dl>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card border-dark mb-3 text-black-50" style="max-width: 25rem;">
+                <div class="card-header"><h3>@Html.DisplayFor(model => model.BookName)</h3> </div>
+                <div class="card-body text-dark">
+
+                    <p class="card-text">
+
+
+                        <label class="col-sm-10">
+                            <b>Description:</b> <br />
+                            @Html.DisplayFor(model => model.BookDescription)
+                        </label>
+
+                        <label class="col-sm-10">
+                            <b>Price:</b> <br />
+                            @Html.DisplayFor(model => model.Price) $
+                        </label>
+                        <label class="col-sm-10">
+                            <b>Genre:</b> <br />
+                            @Html.DisplayFor(model => model.Genre) 
+                        </label>
+                      
+
+
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-6">
+            <div style="width: 18rem; height: 30rem;">
+                <img class="img-thumbnail" src="@Model.BookImage" alt="Image for Book!" />
+            </div>
+        </div>
+
+    </div>
+
 </div>
+
+
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
+    <a asp-action="Index">Back</a>
 </div>

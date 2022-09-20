@@ -113,7 +113,7 @@ namespace EBook.Service.Implementation
                     BookId = z.CurrnetBook.Id,
                     Book = z.CurrnetBook,
                     OrderId = order.Id,
-                    Order = order,
+                    UserOrder = order,
                     Quantity = z.Quantity
                 }).ToList();
 

@@ -3,4 +3,11 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>
+    @foreach (var member in new List<string>() { "185013" }.OrderBy(x => Guid.NewGuid()))
+    {
+        <span>@member.ToString()</span>
+
+        <br />
+    }
+</p>

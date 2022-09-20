@@ -1,6 +1,4 @@
-﻿using Cinema.Domain.DomainModels;
-using Cinema.Domain.Identity;
-using EBook.Domain.DTO;
+﻿using EBook.Domain.DTO;
 using EBook.Domain;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Http;

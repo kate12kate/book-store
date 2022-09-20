@@ -71,10 +71,10 @@ namespace EBook.Web.Controllers
                     worksheet.Cell(i + 1, 1).Value = item.Id.ToString();
                     worksheet.Cell(i + 1, 2).Value = item.User.Email;
 
-                    for (int p = 0; p < item.TicketInOrders.Count(); p++)
+                    for (int p = 0; p < item.BookInOrders.Count(); p++)
                     {
                         worksheet.Cell(1, p + 3).Value = "Ticket - " + (p + 1);
-                        worksheet.Cell(i + 1, p + 3).Value = item.TicketInOrders.ElementAt(p).PurchasedTicket.MovieTitle;
+                        worksheet.Cell(i + 1, p + 3).Value = item.BookInOrders.ElementAt(p).Book.BookName;
                     }
                 }
 
@@ -108,10 +108,10 @@ namespace EBook.Web.Controllers
 
             var totalPrice = 0.0;
 
-            foreach (var item in result.TicketInOrders)
+            foreach (var item in result.BookInOrders)
             {
-                totalPrice += item.Quantity * item.PurchasedTicket.TicketPrice;
-                sb.AppendLine(item.Quantity + " ticket\\s for the movie \'" + item.PurchasedTicket.MovieTitle + "\' with price of: " + item.PurchasedTicket.TicketPrice + "$");
+                totalPrice += item.Quantity * item.Book.Price;
+                sb.AppendLine(item.Quantity + " ticket\\s for the movie \'" + item.Book.BookName + "\' with price of: " + item.Book.Price+ "$");
             }
 
 

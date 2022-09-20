@@ -61,7 +61,7 @@ namespace BookShop.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BookName,BookImage,BookDescription,Price,Rating")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,BookName,BookImage,BookDescription,Price,Rating,Genre")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace BookShop.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,BookName,BookImage,BookDescription,Price,Rating")] Book book)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,BookName,BookImage,BookDescription,Price,Rating,Genre")] Book book)
         {
 
             _logger.LogInformation("User Request -> Update Book in DataBase!");
