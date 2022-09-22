@@ -69,7 +69,11 @@ namespace EBook.Service.Implementation
             var book = this.GetDetailsForBook(id);
             this._bookRepository.Delete(book);
         }
-
+        public List<Book> GetAllBooksGenre(string genre)
+        {
+            
+            return this._bookRepository.GetAll().Where(book => book.Genre.Equals(genre)).ToList();
+        }
         public List<Book> GetAllBooks()
         {
             return this._bookRepository.GetAll().ToList();

@@ -73,7 +73,7 @@ namespace EBook.Web.Controllers
 
                     for (int p = 0; p < item.BookInOrders.Count(); p++)
                     {
-                        worksheet.Cell(1, p + 3).Value = "Ticket - " + (p + 1);
+                        worksheet.Cell(1, p + 3).Value = "Book - " + (p + 1);
                         worksheet.Cell(i + 1, p + 3).Value = item.BookInOrders.ElementAt(p).Book.BookName;
                     }
                 }
@@ -96,8 +96,8 @@ namespace EBook.Web.Controllers
                 Id = id
             };
             var result = this.orderService.getOrderDetails(model);
-
-            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "files//Invoice.docx");
+            
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "files\\Invoice.docx");
             var document = DocumentModel.Load(templatePath);
 
 
@@ -111,11 +111,11 @@ namespace EBook.Web.Controllers
             foreach (var item in result.BookInOrders)
             {
                 totalPrice += item.Quantity * item.Book.Price;
-                sb.AppendLine(item.Quantity + " ticket\\s for the movie \'" + item.Book.BookName + "\' with price of: " + item.Book.Price+ "$");
+                sb.AppendLine(item.Book.BookName +" with quantity of: " + item.Quantity + "\' with price of: " + item.Book.Price+ "$");
             }
 
 
-            document.Content.Replace("{{TicketList}}", sb.ToString());
+            document.Content.Replace("{{BookList}}", sb.ToString());
             document.Content.Replace("{{TotalPrice}}", totalPrice.ToString() + "$");
 
 

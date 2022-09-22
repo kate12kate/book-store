@@ -11,6 +11,7 @@ namespace EBook.Service.Interface
     {
         List<Book> GetAllBooks();
         Book GetDetailsForBook(Guid? id);
+        List<Book> GetAllBooksGenre(string genre);
         void CreateNewBook(Book p);
         void UpdeteExistingBook(Book p);
         AddToShoppingCartDto GetShoppingCartInfo(Guid? id);
