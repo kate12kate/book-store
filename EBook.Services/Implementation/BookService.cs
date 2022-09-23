@@ -52,6 +52,8 @@ namespace EBook.Service.Implementation
                     };
 
                     this._bookInShoppingCartRepository.Insert(itemToAdd);
+                    userShoppingCard.BookInShoppingCarts.Add(itemToAdd);
+                    _userRepository.Update(user);
                     return true;
                 }
                 return false;
@@ -74,6 +76,13 @@ namespace EBook.Service.Implementation
             
             return this._bookRepository.GetAll().Where(book => book.Genre.Equals(genre)).ToList();
         }
+        
+       public List<Book> GetAllBooksByTitle(string title)
+        {
+            return this._bookRepository.GetAll().Where(book => book.BookName.ToLower().Contains(title.ToLower())).ToList();
+        }
+    
+      
         public List<Book> GetAllBooks()
         {
             return this._bookRepository.GetAll().ToList();

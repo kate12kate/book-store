@@ -29,10 +29,22 @@ namespace BookShop.Web.Controllers
         }
 
         // GET: Books
+        [HttpGet]
         public IActionResult Index()
         {
             _logger.LogInformation("User Request -> Get All bookss!");
             return View(this._bookService.GetAllBooks());
+        }
+
+        [HttpPost]
+        public IActionResult Index(string title)
+        {
+            if (title == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var allTickets = _bookService.GetAllBooksByTitle(title);
+            return View(allTickets);
         }
 
         // GET: Books/Details/5
