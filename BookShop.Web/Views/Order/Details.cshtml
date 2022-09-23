@@ -14,25 +14,53 @@
         if (i % 3 == 0)
         {
             @:<div class="row">
-            }
+        }
 
-            <div class="col-md-3 m-4">
-                <div class="card" style="width: 18rem; height: 30rem;">
-                    <img class="card-img-top" style="height: 70%" src="@item.BookImage" alt="Card image cap">
-                    <div class="card-body">
-                        <h3>@item.BookName</h3>
-                        <h3>@item.BookDescription</h3>
-                        <p>Quantity: @Model.BookInOrders.ElementAt(i).Quantity</p>
-                        <p></p>
+            <div class="container">
+                <hr />
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card border-dark mb-3 text-black-50" style="max-width: 25rem;">
+                            <div class="card-header"><h3>@item.BookName</h3> </div>
+                            <div class="card-body text-dark">
+
+                                <p class="card-text">
+
+
+                                    <label class="col-sm-10">
+                                        <b>Description:</b> <br />
+                                       @item.BookDescription
+                                    </label>
+
+                                    <label class="col-sm-10">
+                                        <b>Price:</b> <br />
+                                       @item.Price $
+                                    </label>
+                                    <label class="col-sm-10">
+                                        <b>Genre:</b> <br />
+                                       @item.Genre
+                                    </label>
+                                <p>Quantity: @Model.BookInOrders.ElementAt(i).Quantity</p>
+
+
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div style="width: 18rem; height: 30rem;">
+                            <img class="img-thumbnail" src="@item.BookImage" alt="Image for Book!" />
+                        </div>
                     </div>
 
                 </div>
-            </div>
+                </div>
+          
 
-            if (i % 3 == 2)
-            {
-            @:</div>
-        }
+          
+        
     }
 
 

@@ -197,7 +197,7 @@ namespace BookShop.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleName.Admin)]
-        public IActionResult ExportAllTickets()
+        public IActionResult ExportAllBooks()
         {
             return View();
         }
