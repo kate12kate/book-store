@@ -1,0 +1,24 @@
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["./BookShop.Web/EBook.Web.csproj", "BookShop.Web/"]
+COPY ["./EBook.Domain/EBook.Domain.csproj", "EBook.Domain/"]
+COPY ["./EBook.Services/EBook.Service.csproj", "EBook.Services/"]
+COPY ["./EBook.Repository/EBook.Repository.csproj", "EBook.Repository/"]
+RUN dotnet restore "BookShop.Web/EBook.Web.csproj"
+COPY . .
+WORKDIR "/src/BookShop.Web"
+RUN dotnet build "EBook.Web.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "EBook.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "EBook.Web.dll"]

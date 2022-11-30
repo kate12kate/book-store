@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
   db:
-    container_name: postgres_container
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-bookstoredb}
       PGDATA: /data/postgres
     volumes:
        - postgres:/data/postgres
@@ -16,7 +16,6 @@ services:
       - postgres
   
   pgadmin:
-    container_name: pgadmin_container
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
@@ -27,6 +26,22 @@ services:
 
     ports:
       - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - postgres
+  app:
+    environment:
+      # - ASPNETCORE_ENVIRONMENT=Development
+      # - ASPNETCORE_URLS=http://+:443;http://+:80
+      # - ASPNETCORE_HTTPS_PORT=8080
+      - BOOKSTORE_DBCONN=Server=db;Database=bookstoredb;User Id=postgres;Password=changeme;
+    build:
+      context: ./..
+      dockerfile: EBook.Docker/Dockerfile.txt
+    image: bookstoreapp
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
     networks:
       - postgres
 

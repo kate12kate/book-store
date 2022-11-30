@@ -71,6 +71,8 @@ namespace EBook.Repository
                 .HasOne(z => z.UserOrder)
                 .WithMany(z => z.BookInOrders)
                 .HasForeignKey(z => z.OrderId);
+            builder.Entity<Book>()
+                .HasData(new Book { BookName = "Atomic Habits", BookImage = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSlWR55VTSq5rQ5bjdm9bjNtT75d0KZcd8Lv1Jn72v-GGxQPJaa", BookDescription = "James Clear, an expert on habit formation, reveals practical strategies that will teach you how to form good habits, break bad ones, and master the tiny behaviors that lead to remarkable results. He draws on proven ideas from biology, psychology, and neuroscience to create an easy-to-understand guide for making good habits inevitable and bad habits impossible.", Genre = "Self-care", Price = 150 });
             // add roles
             builder.Entity<IdentityRole>().HasData(new IdentityRole
             {

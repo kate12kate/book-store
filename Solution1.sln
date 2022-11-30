@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BookShop", "BookShop", "{46A8961E-7FCD-431D-BDA4-4AE611AC4BB8}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		Dockerfile.txt = Dockerfile.txt
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EBook.Web", "BookShop.Web\EBook.Web.csproj", "{DB0ADF2B-D7D7-46F8-88B9-4E6F7C70A13F}"
 EndProject

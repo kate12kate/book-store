@@ -6,19 +6,15 @@ using EBook.Repository.Interface;
 using EBook.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Stripe;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EBook.Web
 {
@@ -40,11 +36,9 @@ namespace EBook.Web
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Environment.GetEnvironmentVariable("BOOKSTORE_DBCONN")));
 
             services.AddIdentity<EShopAppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
-         
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
@@ -57,16 +51,16 @@ namespace EBook.Web
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
-           
+
             services.AddTransient<IBookService, Service.Implementation.BookService>();
             services.AddTransient<IShoppingCartService, Service.Implementation.ShoppingCartService>();
             services.AddTransient<IOrderService, Service.Implementation.OrderService>();
             services.AddTransient<IUserService, Service.Implementation.UserService>();
 
-           
+
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-            
+
             services.AddControllersWithViews()
                .AddNewtonsoftJson(options =>
                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -81,13 +75,26 @@ namespace EBook.Web
 
             services.AddControllers();
         }
-     
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
+            //using (var scope = app.ApplicationServices.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
 
+            //    var context = services.GetRequiredService<ApplicationDbContext>();
+            //    if (context.Database.GetPendingMigrations().Any())
+            //    {
+            //        context.Database.Migrate();
+            //    }
+            //}
+
+            using var scope = app.ApplicationServices.CreateAsyncScope();
+            using var db = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            db.Database.MigrateAsync();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
