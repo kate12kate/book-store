@@ -20,11 +20,11 @@ namespace BookShop.Web.Controllers
     public class BooksController : Controller
     {
         private readonly IBookService _bookService;
-        private readonly ILogger<BooksController> _logger;
+        // private readonly ILogger<BooksController> _logger;
 
-        public BooksController(ILogger<BooksController> logger, IBookService bookService)
+        public BooksController( IBookService bookService)
         {
-            _logger = logger;
+            //_logger = logger;
             _bookService = bookService;
         }
 
@@ -32,7 +32,7 @@ namespace BookShop.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            _logger.LogInformation("User Request -> Get All bookss!");
+            //_logger.LogInformation("User Request -> Get All bookss!");
             return View(this._bookService.GetAllBooks());
         }
 
@@ -96,7 +96,7 @@ namespace BookShop.Web.Controllers
         // GET: Books/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            _logger.LogInformation("User Request -> Get edit form for Book!");
+            //_logger.LogInformation("User Request -> Get edit form for Book!");
             if (id == null)
             {
                 return NotFound();
@@ -118,7 +118,7 @@ namespace BookShop.Web.Controllers
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,BookName,BookImage,BookDescription,Price,Rating,Genre")] Book book)
         {
 
-            _logger.LogInformation("User Request -> Update Book in DataBase!");
+           // _logger.LogInformation("User Request -> Update Book in DataBase!");
 
             if (id != book.Id)
             {
@@ -150,7 +150,7 @@ namespace BookShop.Web.Controllers
         // GET: Books/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            _logger.LogInformation("User Request -> Get delete form for Book!");
+           // _logger.LogInformation("User Request -> Get delete form for Book!");
 
             if (id == null)
             {
@@ -188,7 +188,7 @@ namespace BookShop.Web.Controllers
         public IActionResult AddBookToCard(AddToShoppingCartDto model)
         {
 
-            _logger.LogInformation("User Request -> Add book in ShoppingCart and save changes in database!");
+           // _logger.LogInformation("User Request -> Add book in ShoppingCart and save changes in database!");
 
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

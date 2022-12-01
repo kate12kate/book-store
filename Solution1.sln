@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EBook.Repository", "EBook.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EBook.Service", "EBook.Services\EBook.Service.csproj", "{91DC4015-D512-44C7-A68D-0F33579F1559}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EBook.Tests", "EBook.Tests\EBook.Tests.csproj", "{1222718C-24E3-433C-922E-2152254C5988}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{91DC4015-D512-44C7-A68D-0F33579F1559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91DC4015-D512-44C7-A68D-0F33579F1559}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91DC4015-D512-44C7-A68D-0F33579F1559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1222718C-24E3-433C-922E-2152254C5988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1222718C-24E3-433C-922E-2152254C5988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1222718C-24E3-433C-922E-2152254C5988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1222718C-24E3-433C-922E-2152254C5988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
